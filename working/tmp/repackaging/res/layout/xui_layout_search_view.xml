@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@id/search_layout" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View android:id="@id/transparent_view" android:background="?search_view_layover_bg_color" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/search_top_bar" android:background="@color/xui_config_color_white" android:layout_width="fill_parent" android:layout_height="?search_view_actionbar_height">
+            <androidx.appcompat.widget.AppCompatImageButton android:id="@id/action_up_btn" app:srcCompat="?search_view_ic_back" style="@style/MSV_ImageButton" />
+            <androidx.appcompat.widget.AppCompatEditText android:textSize="?search_view_text_size" android:textColor="?search_view_text_color" android:textColorHint="?search_view_text_color_hint" android:id="@id/searchTextView" android:background="@null" android:layout_width="0.0dip" android:layout_height="fill_parent" android:hint="@string/xui_search_hint" android:singleLine="true" android:layout_weight="1.0" android:inputType="textNoSuggestions" android:imeOptions="actionSearch" android:paddingStart="?search_view_text_padding" android:paddingEnd="?search_view_text_padding" />
+            <androidx.appcompat.widget.AppCompatImageButton android:id="@id/action_voice_btn" app:srcCompat="?search_view_ic_video" style="@style/MSV_ImageButton" />
+            <androidx.appcompat.widget.AppCompatImageButton android:id="@id/action_clear_btn" android:visibility="gone" app:srcCompat="?search_view_ic_clear" style="@style/MSV_ImageButton" />
+        </LinearLayout>
+        <View android:background="?search_view_separator_color" android:layout_width="fill_parent" android:layout_height="?search_view_separator_height" />
+        <ListView android:id="@id/suggestion_list" android:background="@color/xui_config_color_white" android:layout_width="fill_parent" android:layout_height="wrap_content" android:divider="@color/xui_config_color_transparent" />
+    </LinearLayout>
+</FrameLayout>

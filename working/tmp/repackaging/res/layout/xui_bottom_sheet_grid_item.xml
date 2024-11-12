@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheetItemView android:gravity="center_horizontal" android:orientation="vertical" android:paddingTop="?xui_bottom_sheet_grid_item_paddingTop" android:paddingBottom="?xui_bottom_sheet_grid_item_paddingBottom" android:layout_width="?xui_bottom_sheet_grid_item_mini_width" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_width="?xui_bottom_sheet_grid_item_icon_size" android:layout_height="?xui_bottom_sheet_grid_item_icon_size" android:layout_marginTop="?xui_bottom_sheet_grid_item_icon_marginTop" android:layout_marginBottom="?xui_bottom_sheet_grid_item_icon_marginBottom">
+        <androidx.appcompat.widget.AppCompatImageView android:id="@id/grid_item_image" android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="centerInside" android:layout_centerInParent="true" />
+        <ViewStub android:id="@id/grid_item_subscript" android:visibility="gone" android:layout="@layout/xui_bottom_sheet_grid_item_subscript" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+    <TextView android:textAppearance="?xui_bottom_sheet_grid_item_text_appearance" android:gravity="center_horizontal" android:id="@id/grid_item_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="2" />
+</com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheetItemView>

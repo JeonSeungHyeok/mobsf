@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:layout_gravity="bottom" android:orientation="horizontal" android:id="@id/cookie" android:background="@color/cookie_bar_default_bg_color" android:paddingTop="36.0dip" android:paddingBottom="?xui_config_content_spacing_horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:paddingStart="?xui_config_content_spacing_horizontal" android:paddingEnd="?xui_config_content_spacing_horizontal"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.appcompat.widget.AppCompatImageView android:id="@id/iv_icon" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="?xui_config_content_spacing_horizontal" />
+    <LinearLayout android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0">
+        <TextView android:textSize="?xui_config_size_title_text" android:textStyle="bold" android:textColor="@color/xui_config_color_white" android:id="@id/tv_title" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" />
+        <TextView android:textSize="?xui_config_size_content_text" android:textColor="@color/xui_config_color_white" android:id="@id/tv_message" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="?xui_config_content_spacing_vertical" />
+    </LinearLayout>
+    <TextView android:textSize="?xui_config_size_content_text" android:textStyle="bold" android:textColor="@color/xui_config_color_white" android:gravity="bottom" android:id="@id/btn_action" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginStart="24.0dip" />
+    <androidx.appcompat.widget.AppCompatImageView android:gravity="bottom" android:id="@id/btn_action_with_icon" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="24.0dip" />
+</LinearLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_gravity="bottom" android:orientation="vertical" android:id="@id/key_body" android:background="#ffffffff" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentBottom="true"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="@dimen/text_28pt" android:textColor="#ff000000" android:gravity="bottom|center|right" android:id="@id/tv_keypad" android:padding="@dimen/wh_20px" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="" android:layout_weight="1.0" />
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="@dimen/wh_100px">
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_1" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="1" style="@style/key_base_top" />
+            <TextView android:text="" style="@style/key_base_bottom" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_2" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="2" style="@style/key_base_top" />
+            <TextView android:text="ABC" style="@style/key_base_bottom" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_3" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="3" style="@style/key_base_top" />
+            <TextView android:text="DEF" style="@style/key_base_bottom" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="@dimen/wh_100px">
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_4" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="4" style="@style/key_base_top" />
+            <TextView android:text="GHI" style="@style/key_base_bottom" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_5" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="5" style="@style/key_base_top" />
+            <TextView android:text="JKL" style="@style/key_base_bottom" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_6" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="6" style="@style/key_base_top" />
+            <TextView android:text="MNO" style="@style/key_base_bottom" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="@dimen/wh_100px">
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_7" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="7" style="@style/key_base_top" />
+            <TextView android:text="PQRS" style="@style/key_base_bottom" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_8" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="8" style="@style/key_base_top" />
+            <TextView android:text="TUV" style="@style/key_base_bottom" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_9" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="9" style="@style/key_base_top" />
+            <TextView android:text="WXYZ" style="@style/key_base_bottom" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="@dimen/wh_100px">
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_x" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="*" style="@style/key_base_full" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_0" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="0" style="@style/key_base_full" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/key_j" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+            <TextView android:text="\#" style="@style/key_base_full" />
+        </LinearLayout>
+    </LinearLayout>
+    <View android:background="#fffafafa" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+</LinearLayout>

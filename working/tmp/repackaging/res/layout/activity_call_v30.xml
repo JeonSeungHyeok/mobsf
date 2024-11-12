@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="16.0sp" android:textColor="@android:color/white" android:gravity="center" android:id="@id/tv_call_msg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="70.0dip" />
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="30.0sp" android:textStyle="bold" android:textColor="@android:color/white" android:gravity="center" android:id="@id/tv_call_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="200.0dip" android:layout_centerHorizontal="true" android:textAlignment="center" />
+        <TextView android:textSize="16.0sp" android:textColor="@android:color/white" android:gravity="center" android:id="@id/tv_call_no" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6.0dip" android:layout_below="@id/tv_call_name" android:textAlignment="center" />
+    </RelativeLayout>
+    <RelativeLayout android:id="@id/rl_incoming_call" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="90.0dip" android:layout_alignParentBottom="true">
+        <ImageView android:id="@id/iv_accept_incoming_call" android:background="@drawable/bg_circle_30" android:padding="20.0dip" android:layout_width="80.0dip" android:layout_height="80.0dip" android:src="@drawable/ic_call_new" android:layout_marginStart="60.0dip" />
+        <ImageView android:id="@id/iv_reject_incoming_call" android:background="@drawable/bg_circle_30" android:padding="20.0dip" android:layout_width="80.0dip" android:layout_height="80.0dip" android:layout_marginRight="60.0dip" android:src="@drawable/ic_call_end_new" android:layout_alignParentRight="true" />
+    </RelativeLayout>
+</RelativeLayout>

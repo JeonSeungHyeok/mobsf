@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xuexiang.xui.widget.dialog.materialdialog.internal.MDRootLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/xmd_layout_stub_title_frame_less_padding" />
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ScrollView android:id="@id/md_contentScrollView" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:overScrollMode="never">
+            <TextView android:textSize="?md_content_textsize" android:id="@id/md_content" android:paddingTop="@dimen/md_content_padding_top" android:paddingBottom="@dimen/md_content_padding_bottom" android:layout_width="fill_parent" android:layout_height="wrap_content" android:paddingStart="?md_dialog_frame_margin" android:paddingEnd="?md_dialog_frame_margin" />
+        </ScrollView>
+        <FrameLayout android:id="@id/md_contentListViewFrame" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView android:scrollbarStyle="outsideOverlay" android:id="@id/md_contentRecyclerView" android:paddingTop="@dimen/md_content_padding_top" android:paddingBottom="@dimen/md_content_padding_bottom" android:scrollbars="vertical" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:overScrollMode="never" />
+        </FrameLayout>
+        <CheckBox android:gravity="start|center" android:layout_gravity="start" android:id="@id/md_promptCheckbox" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/md_notitle_vertical_padding" android:layout_marginEnd="@dimen/md_notitle_vertical_padding" />
+    </LinearLayout>
+    <include layout="@layout/xmd_layout_stub_action_buttons" />
+</com.xuexiang.xui.widget.dialog.materialdialog.internal.MDRootLayout>

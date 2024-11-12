@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="#ffffffff" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:background="#ff69a339" android:layout_width="fill_parent" android:layout_height="120.0dip">
+        <TextView android:textSize="14.0sp" android:textColor="@android:color/white" android:layout_gravity="right" android:id="@id/tv_call_msg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="30.0dip" android:layout_marginRight="15.0dip" android:text="" android:layout_alignParentRight="true" />
+        <TextView android:textSize="26.0sp" android:textColor="@android:color/white" android:id="@id/tv_call_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="15.0dip" android:layout_marginTop="40.0dip" />
+        <TextView android:textSize="16.0sp" android:textColor="@android:color/white" android:id="@id/tv_call_no" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="15.0dip" android:layout_below="@id/tv_call_name" />
+    </RelativeLayout>
+    <ImageView android:background="#ff8ab7bc" android:paddingTop="20.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/ic_api_6_img" android:scaleType="centerCrop" android:adjustViewBounds="true" />
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <RelativeLayout android:id="@id/rl_incoming_call" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="35.0dip" android:layout_centerInParent="true">
+            <ImageView android:id="@id/iv_accept_incoming_call" android:background="@drawable/bg_circle_green" android:padding="10.0dip" android:layout_width="@dimen/wh_120px" android:layout_height="@dimen/wh_120px" android:layout_marginLeft="30.0dip" android:src="@drawable/ic_call_old" android:adjustViewBounds="true" />
+            <ImageView android:id="@id/iv_reject_incoming_call" android:background="@drawable/bg_circle_red" android:padding="10.0dip" android:layout_width="@dimen/wh_120px" android:layout_height="@dimen/wh_120px" android:layout_marginRight="30.0dip" android:src="@drawable/ic_call_end_old" android:adjustViewBounds="true" android:layout_alignParentRight="true" />
+        </RelativeLayout>
+        <RelativeLayout android:id="@id/rl_end_call" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="50.0dip" android:layout_centerInParent="true">
+            <ImageView android:id="@id/iv_end_call" android:background="@drawable/bg_circle_red" android:padding="10.0dip" android:layout_width="50.0dip" android:layout_height="50.0dip" android:src="@drawable/ic_call_end_old" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

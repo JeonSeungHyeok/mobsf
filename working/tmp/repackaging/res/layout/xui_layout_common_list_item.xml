@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.appcompat.widget.AppCompatImageView android:id="@id/group_list_item_imageView" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:scaleType="fitCenter" android:adjustViewBounds="true" android:layout_centerVertical="true" android:contentDescription="@null" android:layout_marginEnd="?xui_common_list_item_icon_margin_right" android:layout_alignParentStart="true" />
+    <FrameLayout android:id="@id/group_list_item_accessoryView" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_marginStart="?xui_common_list_item_accessory_margin_left" android:layout_alignParentEnd="true" />
+    <LinearLayout android:orientation="horizontal" android:id="@id/group_list_item_textContainer" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_alignWithParentIfMissing="true" android:layout_toStartOf="@id/group_list_item_accessoryView" android:layout_toEndOf="@id/group_list_item_imageView">
+        <TextView android:textSize="?xui_common_list_item_title_h_text_size" android:textColor="@color/xui_config_color_gray_1" android:ellipsize="end" android:gravity="start|center" android:id="@id/group_list_item_textView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:includeFontPadding="false" />
+        <Space android:id="@id/group_list_item_space" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0" android:layout_marginEnd="?xui_common_list_item_h_space_min_width" />
+        <TextView android:textSize="?xui_common_list_item_detail_h_text_size" android:textColor="@color/xui_config_color_gray_5" android:id="@id/group_list_item_detailTextView" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:includeFontPadding="false" android:lineSpacingExtra="?xui_common_list_item_detail_line_space" />
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatImageView android:id="@id/group_list_item_tips_dot" android:visibility="gone" android:contentDescription="Red dot" style="?XUITipPointStyle" />
+    <ViewStub android:id="@id/group_list_item_tips_new" android:visibility="gone" android:layout="@layout/xui_layout_common_list_item_tip_new" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" />
+</merge>

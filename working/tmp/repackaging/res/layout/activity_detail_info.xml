@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:tag="layout/activity_detail_info_0" android:background="@color/act_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageButton android:id="@id/btn_back" android:background="@mipmap/icon_back" android:layout_width="@dimen/dp_mm_70" android:layout_height="@dimen/dp_mm_70" android:layout_marginTop="@dimen/dp_mm_60" android:layout_marginStart="@dimen/dp_mm_50" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" style="@style/btnRipple" />
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView android:id="@id/rv" android:layout_width="fill_parent" android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/btn_back" />
+</androidx.constraintlayout.widget.ConstraintLayout>

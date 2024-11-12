@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/md_titleFrame" android:paddingTop="?md_dialog_frame_margin" android:paddingBottom="@dimen/md_title_frame_margin_bottom" android:layout_width="fill_parent" android:layout_height="wrap_content" android:paddingStart="?md_dialog_frame_margin" android:paddingEnd="?md_dialog_frame_margin"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.appcompat.widget.AppCompatImageView android:id="@id/md_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:scaleType="fitXY" android:layout_marginEnd="?md_icon_margin" />
+    <TextView android:textSize="?md_title_textsize" android:id="@id/md_title" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+</LinearLayout>

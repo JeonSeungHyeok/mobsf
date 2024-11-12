@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list android:opacity="opaque"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="?xui_config_color_splash_bg" />
+    <item android:bottom="?xui_config_app_logo_bottom">
+        <bitmap android:gravity="center" android:src="?xui_config_splash_app_logo" />
+    </item>
+</layer-list>

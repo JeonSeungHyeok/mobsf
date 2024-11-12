@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:background="@color/white" android:focusable="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="@dimen/dp_mm_180" android:minHeight="@dimen/dp_mm_180" style="@style/btnRipple"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView android:id="@id/imageView" android:background="@mipmap/icon_knockout" android:layout_width="@dimen/dp_mm_66" android:layout_height="@dimen/dp_mm_66" android:layout_marginStart="@dimen/dp_mm_60" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    <TextView android:textSize="@dimen/dp_mm_55" android:textColor="#ff111111" android:gravity="center_vertical" android:id="@id/tv" android:layout_width="wrap_content" android:layout_height="@dimen/dp_mm_100" android:layout_marginStart="@dimen/dp_mm_40" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@id/imageView" app:layout_constraintTop_toTopOf="parent" />
+    <TextView android:textSize="@dimen/dp_mm_50" android:id="@id/callDate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="@dimen/dp_mm_40" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    <View android:id="@id/line" android:background="@color/gray" android:layout_width="fill_parent" android:layout_height="1.0dip" app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
