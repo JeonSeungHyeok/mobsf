@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_enabled="false" android:color="@color/xui_config_color_edittext_hint_text" />
-    <item android:state_enabled="true" android:color="@color/xui_config_color_edittext_input_text" />
-    <item android:color="@color/xui_config_color_edittext_input_text" />
-</selector>

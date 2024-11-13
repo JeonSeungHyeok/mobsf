@@ -14,20 +14,20 @@ class key:
             logger.info('\nAPI Key read from environment variable')
             return os.environ['MOBSF_API_KEY']
     
-        secret_file = os.path.join(os.path.expanduser("~"), '.MobSF', 'secret')
-        if self.is_file_exists(secret_file):
+        secretFile = os.path.join(os.path.expanduser("~"), '.MobSF', 'secret')
+        if self.is_file_exists(secretFile):
             try:
-                _api_key = open(secret_file).read().strip()
-                return self.gen_sha256_hash(_api_key)
+                apiKey = open(secretFile).read().strip()
+                return self.gen_sha256_hash(apiKey)
             except Exception:
                 logger.exception('Cannot Read API Key')
     
-    def is_file_exists(self,file_path):
-        if os.path.isfile(file_path):
+    def is_file_exists(self,filePath):
+        if os.path.isfile(filePath):
             return True
         # This fix situation where a user just typed "adb" or another executable
         # inside settings.py/config.py
-        if shutil.which(file_path):
+        if shutil.which(filePath):
             return True
         else:
             return False
@@ -36,6 +36,6 @@ class key:
         """Generate SHA 256 Hash of the message."""
         if isinstance(msg, str):
             msg = msg.encode('utf-8')
-        hash_object = hashlib.sha256(msg)
-        return hash_object.hexdigest()
+        hashObject = hashlib.sha256(msg)
+        return hashObject.hexdigest()
 

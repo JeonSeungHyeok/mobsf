@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/dialog_view" android:background="@drawable/xui_config_bg_dialog_radius_white" android:padding="?xui_dialog_loading_padding_size" android:layout_width="fill_parent" android:layout_height="fill_parent" android:minWidth="?xui_dialog_loading_min_size" android:minHeight="?xui_dialog_loading_min_size"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <include layout="@layout/xui_layout_loading_view" />
-</LinearLayout>

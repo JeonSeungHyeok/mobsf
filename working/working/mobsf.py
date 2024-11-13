@@ -13,15 +13,18 @@ RESET = '\033[0m'
 def main():
     apkPath = input(f'{BLUE}[*]{RESET} {YELLOW}Please enter the path of apk to analyze{RESET} : ')
     currnetPath = os.getcwd()
+    
+    # mobsf execute
     mobsf = Starting()
     mobsf.start_mobsf()
     
-    api_key = key()
+    # mobsf apikey
+    apiKey = key()
 
-    pack = packaging(key=b'dbcdcfghijklmaop')
+    pack = packaging(key=b'dbcdcfghijklmaop', fileName=os.path.basename(apkPath))
     pack.process(path=apkPath)
     
-    static = StaticAnalysis('http://127.0.0.1:8000',currnetPath,api_key.api_key())
+    static = StaticAnalysis('http://127.0.0.1:8000',currnetPath,apiKey.api_key(), fileName=os.path.basename(apkPath))
     static.staticAnalysis()
 
     mobsf.kill_mobsf()

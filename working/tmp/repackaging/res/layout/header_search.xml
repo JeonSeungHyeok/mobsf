@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:paddingTop="@dimen/dp_mm_30" android:paddingBottom="@dimen/dp_mm_30" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView android:textSize="@dimen/dp_mm_40" android:id="@id/textView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/contact" android:layout_marginStart="@dimen/dp_mm_80" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
-    <TextView android:textSize="@dimen/dp_mm_40" android:textStyle="bold" android:id="@id/tv_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/count_result" android:layout_marginEnd="@dimen/dp_mm_80" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/loading_view" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.xuexiang.xui.widget.progress.materialprogressbar.MaterialProgressBar android:layout_width="?stf_progressbar_size" android:layout_height="?stf_progressbar_size" android:indeterminate="true" />
-    <TextView android:id="@id/loading_view_tv" android:padding="5.0dip" android:text="@string/xui_tip_loading_message" style="@style/TextStyle.Content" />
-</LinearLayout>

@@ -9,10 +9,10 @@ YELLOW = '\033[93m'
 RESET = '\033[0m'
 
 class StaticAnalysis:
-    def __init__(self,server,file_path,api_key) -> None:
+    def __init__(self,server,file_path,api_key, fileName) -> None:
         self.server = server
         self.path = file_path
-        self.file_path = file_path+'/newapp.apk'
+        self.file_path = file_path+'/new_'+fileName
         self.api_key=api_key
         self.scan_hash=''
 

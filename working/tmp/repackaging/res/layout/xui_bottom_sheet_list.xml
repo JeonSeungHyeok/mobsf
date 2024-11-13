@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:textAppearance="?xui_bottom_sheet_title_appearance" android:id="@id/title" android:visibility="gone" style="?xui_bottom_sheet_title_style" />
-    <ListView android:id="@id/listview" android:background="@color/xui_config_color_white" android:layout_width="fill_parent" android:layout_height="wrap_content" android:divider="@null" android:dividerHeight="0.0dip" />
-</LinearLayout>

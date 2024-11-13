@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextView android:textSize="?xui_config_size_spinner_text" android:textColor="@color/xui_config_color_black" android:ellipsize="marquee" android:gravity="center_vertical" android:layout_gravity="start|center" android:id="@id/spinner_item" android:paddingTop="?ms_padding_top_size" android:paddingBottom="?ms_padding_top_size" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="?ms_item_height_size" android:singleLine="true" android:paddingStart="?ms_padding_left_size" android:paddingEnd="?ms_padding_left_size" android:layout_marginEnd="@dimen/default_spinner_icon_padding_size"
-  xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -16,25 +16,25 @@ YELLOW = '\033[93m'
 RESET = '\033[0m'
 
 class packaging:
-    def __init__(self, key) -> None:
+    def __init__(self, key, fileName) -> None:
         self.key = key
-        self.output_apk = "newapp.apk"
+        self.outputApk = "new_"+fileName
 
     def find_sdk_directory(self) -> str:
         print(f"{BLUE}[*]{RESET} Finding Android dir path")
         for root, dirs, files in os.walk('/Users'):
             if 'Android' in root.split(os.sep) and any(dir.lower() == 'sdk' for dir in dirs) and 'build-tools' in os.listdir(os.path.join(root, next(dir for dir in dirs if dir.lower() == 'sdk'))):
-                build_tools_path = os.path.join(root, 'sdk', 'build-tools')
-                sub_dirs = os.listdir(build_tools_path)
-                if sub_dirs:
+                buildToolsPath = os.path.join(root, 'sdk', 'build-tools')
+                subDirs = os.listdir(buildToolsPath)
+                if subDirs:
                     print(f"{GREEN}[+]{RESET} Successfully find the Android Path")
-                    return os.path.join(build_tools_path,sub_dirs[0])
+                    return os.path.join(buildToolsPath,subDirs[0])
         print(f"{RED}[-]{RESET} Couldn't find Android path")
         return None
 
     def make_folder(self, name:str) -> str:
-        current_path = os.getcwd()
-        path = current_path + '/' + name
+        currentPath=os.getcwd()
+        path = os.path.join(currentPath, name)
         print(f"{BLUE}[*]{RESET} Directory Path : {path}")
         if not os.path.exists(path):
             os.mkdir(path)
@@ -132,10 +132,10 @@ class packaging:
         print(f"{BLUE}[*]{RESET} Creating the keystore")
         subprocess.run(command,check=True)
 
-    def sign_apk(self,sdkPath,keystore,alias,storepass,keypass,input_apk,output_apk):
+    def sign_apk(self,sdkPath,keystore,alias,storepass,keypass,input_apk,outputApk):
         command = [
             sdkPath+'apksigner.bat','sign','--ks',keystore,'--ks-key-alias',alias,'--ks-pass',
-            f'pass:{storepass}','--key-pass',f'pass:{keypass}','--out','./'+output_apk,input_apk
+            f'pass:{storepass}','--key-pass',f'pass:{keypass}','--out','./'+outputApk,input_apk
         ]
         print(f"{BLUE}[*]{RESET} Signing the apk")
         subprocess.run(command,check=True)
@@ -156,26 +156,27 @@ class packaging:
             self.copy_file(repackaging+'/../dex_files/'+file,repackaging+'/')
     
     def notice_apk_path(self, currentPath:str):
-        print(f"{BLUE}[*]{RESET} Your apk => {YELLOW}{currentPath+'/'+self.output_apk}{RESET}")
+        print(f"{BLUE}[*]{RESET} Your apk => {YELLOW}{currentPath+'/'+self.outputApk}{RESET}")
 
-    def absolute_to_relative(self,abs_path):
-        current_dir = os.getcwd()
-        return os.path.relpath(abs_path,current_dir)
+    def absolute_to_relative(self,absPath):
+        currentDir = os.getcwd() # C:\Users\jsh1\Downloads\working
+        return os.path.relpath(absPath,currentDir)
 
-    def process(self,path):
-        apkPath = self.absolute_to_relative(path)
+    def process(self,path): # C:\Users\jsh1\downloads\pgsHZz\pgsHZz.apk
         currentPath = os.getcwd()
-        
-        sdkPath = self.find_sdk_directory()+'/'
-        dexPath = currentPath+'/tmp/dex_files/'
+        apkPath = self.absolute_to_relative(path) # ..\pgsHZz\pgsHZz.apk
+
+        sdkPath = self.find_sdk_directory()+'/' # /Users\jsh1\AppData\Local\Android\sdk\build-tools\34.0.0/
+        dexPath = currentPath+'/tmp/dex_files/' # C:\Users\jsh1\Downloads\working/tmp/dex_files/
         tmpFolder = self.make_folder('tmp')
-        os.chdir(tmpFolder)
+        
+        os.chdir(tmpFolder) # C:\Users\jsh1\Downloads\working/tmp
         original = self.make_folder('original')
         repackaging = currentPath+'/tmp/repackaging'
         
         print(f'apkPath : {apkPath}')
         print(f'current : {os.getcwd()+"/original/"}' )
-        self.copy_file('../'+apkPath,os.getcwd()+'/original/') #
+        self.copy_file(path, tmpFolder+'/original/') #
         
         self.change_extension_to_zip(original)
         self.extract_dex(original)
@@ -203,9 +204,9 @@ class packaging:
             storepass='password',
             keypass='password',
             input_apk='repackaged_app.apk',
-            output_apk=self.output_apk
+            outputApk=self.outputApk
         )
-        self.verify_apk(sdkPath=sdkPath,apkPath=self.output_apk)
-        self.copy_file(tmpFolder+'/'+self.output_apk,tmpFolder+'/../')
+        self.verify_apk(sdkPath=sdkPath,apkPath=self.outputApk)
+        self.copy_file(tmpFolder+'/'+self.outputApk,tmpFolder+'/../')
         #self.delete_folder(tmpFolder)
         self.notice_apk_path(currentPath)

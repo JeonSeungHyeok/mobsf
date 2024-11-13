@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="?search_view_actionbar_height"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.appcompat.widget.AppCompatImageView android:id="@id/suggestion_icon" android:background="@color/xui_config_color_transparent" android:focusable="false" android:layout_width="wrap_content" android:layout_height="fill_parent" android:paddingStart="?search_icon_padding" android:paddingEnd="?search_icon_padding" app:srcCompat="?search_view_ic_suggestion" />
-    <TextView android:textSize="?search_view_text_size" android:textColor="?search_view_text_color_hint" android:id="@id/suggestion_text" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingStart="?search_view_text_padding" android:paddingEnd="?search_view_text_padding" />
-</LinearLayout>

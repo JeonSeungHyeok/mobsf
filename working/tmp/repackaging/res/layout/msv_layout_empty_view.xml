@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/empty_view" android:background="?selectableItemBackground" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.appcompat.widget.AppCompatImageView android:layout_width="?stf_tip_img_size" android:layout_height="?stf_tip_img_size" android:tint="?colorAccent" app:srcCompat="@drawable/stf_ic_empty" />
-    <TextView android:id="@id/empty_view_tv" android:padding="5.0dip" android:text="@string/xui_tip_empty_message" style="@style/TextStyle.Content" />
-    <TextView android:padding="5.0dip" android:text="@string/stf_retry" style="@style/TextStyle.Explain" />
-</LinearLayout>

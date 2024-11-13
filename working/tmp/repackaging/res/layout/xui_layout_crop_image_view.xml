@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merge
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.appcompat.widget.AppCompatImageView android:id="@id/iv_content" android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="centerInside" android:adjustViewBounds="true" />
-    <com.xuexiang.xui.widget.imageview.crop.CropOverlayView android:id="@id/crop_overlay_view" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-</merge>

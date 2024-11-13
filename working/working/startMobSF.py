@@ -16,21 +16,20 @@ class Starting:
 
     def start_mobsf(self):
         print(f"{GREEN}[*]{RESET} Finding MobSF dir path")
-        mobsf_dir_path=''
-        run_script = ''
+        mobsfDirPath=''
+        runScript = ''
         for root, dirs, files in os.walk('/Users'):
             if 'Mobile-Security-Framework-MobSF-master' in dirs:
-                mobsf_dir_path = os.path.join(root,'Mobile-Security-Framework-MobSF-master') + '/'
-                if mobsf_dir_path != '':
-                    break        
+                mobsfDirPath = os.path.join(root,'Mobile-Security-Framework-MobSF-master') + '/'
+                break        
         if platform.system()=='Windows':
-            run_script='run.bat'
+            runScript='run.bat'
         elif platform.system()=='Darwin':
-            run_script='run.sh'
-        if not os.path.exists(mobsf_dir_path+run_script):
-            print(f"{RED}[-]{RESET} Error: The {run_script} is not in this path {mobsf_dir_path}")
+            runScript='run.sh'
+        if not os.path.exists(mobsfDirPath+runScript):
+            print(f"{RED}[-]{RESET} Error: The {runScript} is not in this path {mobsfDirPath}")
             return
-        self.process = subprocess.Popen(mobsf_dir_path+run_script,shell=True,cwd=mobsf_dir_path)
+        self.process = subprocess.Popen(mobsfDirPath+runScript, shell=True, cwd=mobsfDirPath)
         print(f'{BLUE}[+]{RESET} MobSF Started Successfully')        
         return self.process
 

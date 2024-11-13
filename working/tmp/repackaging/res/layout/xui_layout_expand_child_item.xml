@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/ll_content" android:padding="?xui_config_content_spacing_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.appcompat.widget.AppCompatImageView android:id="@id/iv_icon" android:layout_width="16.0dip" android:layout_height="16.0dip" android:layout_marginEnd="?xui_config_content_spacing_horizontal" />
-    <TextView android:textSize="?xui_config_size_explain_text" android:textColor="@color/xui_config_color_content_text" android:id="@id/tv_child_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" />
-</LinearLayout>

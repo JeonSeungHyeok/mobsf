@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.AppCompatImageView android:id="@id/bottom_dialog_list_item_mark" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="?xui_icon_check_mark" android:scaleType="centerInside" android:contentDescription="Check mark icon" android:layout_marginStart="?xui_bottom_sheet_list_item_mark_margin_left"
-  xmlns:android="http://schemas.android.com/apk/res/android" />

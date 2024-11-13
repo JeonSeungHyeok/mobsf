@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:background="@color/picker_view_bg_topbar" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <Button android:textSize="?md_button_textsize" android:textColor="?colorAccent" android:gravity="start|center" android:id="@id/btnCancel" android:background="@color/xui_config_color_transparent" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/xui_picker_view_cancel" android:paddingStart="@dimen/picker_view_topbar_padding" />
-    <TextView android:textSize="?xui_config_size_title_text" android:textColor="?xui_config_color_title_text" android:gravity="center" android:id="@id/tvTitle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_toStartOf="@id/btnSubmit" android:layout_toEndOf="@id/btnCancel" />
-    <Button android:textSize="?md_button_textsize" android:textColor="?colorAccent" android:gravity="end|center" android:id="@id/btnSubmit" android:background="@color/xui_config_color_transparent" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/xui_picker_view_submit" android:paddingEnd="@dimen/picker_view_topbar_padding" android:layout_alignParentEnd="true" />
-</RelativeLayout>

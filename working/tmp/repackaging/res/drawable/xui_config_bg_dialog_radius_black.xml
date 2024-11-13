@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape android:shape="rectangle"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:radius="@dimen/default_btn_view_radius_phone" />
-    <solid android:color="@color/xui_config_color_60_pure_black" />
-</shape>
