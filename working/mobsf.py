@@ -1,33 +1,37 @@
 from startMobSF import *
-from uploadAPK import *
+from mobSFRestAPI import *
 from repackagingApk import *
 from key import *
+from colors import *
+from emulator import *
 import os
-
-GREEN = '\033[92m'
-RED = '\033[91m'
-BLUE = '\033[94m'
-YELLOW = '\033[93m'
-RESET = '\033[0m'
+import config
 
 def main():
-    apkPath = input(f'{BLUE}[*]{RESET} {YELLOW}Please enter the path of apk to analyze{RESET} : ')
+    
+    
+    apkPath = config.APK_PATH
     currnetPath = os.getcwd()
     
     # mobsf execute
-    mobsf = Starting()
+    mobsf = Starting(config.MOBSF_NAME)
     mobsf.start_mobsf()
     
     # mobsf apikey
-    apiKey = key()
+    apiKey = key(config.USER_HOME)
 
-    pack = packaging(key=b'dbcdcfghijklmaop', fileName=os.path.basename(apkPath))
+    pack = packaging(config.AES_KEY, os.path.basename(apkPath))
     pack.process(path=apkPath)
     
-    static = StaticAnalysis('http://127.0.0.1:8000',currnetPath,apiKey.api_key(), fileName=os.path.basename(apkPath))
-    static.staticAnalysis()
+    emulate = emulator(config.EMULATOR_NAME, config.EMULATOR_PATH)
+    emulate.start_emulator()
+    emulate.emulator_ready()
 
+    static = Analysis(config.SERVER,currnetPath, os.path.basename(apkPath), apiKey.api_key(), config.DEVICE)
+    static.Analysis()
+    
     mobsf.kill_mobsf()
+    emulate.stop_emulator()
 
 if __name__=="__main__":
     main()

@@ -1,20 +1,12 @@
 import os
 import shutil
-import platform
-import io
-import zipfile
 from zipfile import ZipFile
 import glob
-import base64
+import platform
 from Cryptodome.Cipher import AES
 from Cryptodome.Util.Padding import unpad
+from colors import *
 import subprocess
-
-GREEN = '\033[92m'
-RED = '\033[91m'
-BLUE = '\033[94m'
-YELLOW = '\033[93m'
-RESET = '\033[0m'
 
 class packaging:
     def __init__(self, key, fileName) -> None:
@@ -34,11 +26,13 @@ class packaging:
         return None
 
     def make_folder(self, name:str) -> str:
-        currentPath=os.getcwd()
+        currentPath = os.getcwd()
         path = os.path.join(currentPath, name)
-        print(f"{BLUE}[*]{RESET} Directory Path : {path}")
         if not os.path.exists(path):
+            print(f"{BLUE}[*]{RESET} Creating directory: {path}")
             os.mkdir(path)
+        else:
+            print(f"{YELLOW}[!]{RESET} Directory already exists: {path}")
         return path
 
     def delete_folder(self, rootPath:str):
@@ -129,9 +123,6 @@ class packaging:
         
 
     def create_keystore(self,keystore,alias,storepass,keypass,dname):
-        if os.path.isfile(keystore):
-            print(f"{YELLOW}[!]{RESET} Keystore '{keystore}' already exists. Skipping creation.")
-            return
         command = [
             'keytool', '-genkey', '-v', '-keystore', keystore,
             '-alias', alias, '-keyalg', 'RSA', '-keysize', '2048',
@@ -178,24 +169,24 @@ class packaging:
         print(f"{BLUE}[*]{RESET} Your apk => {YELLOW}{os.path.join(currentPath, self.outputApk)}{RESET}")
 
     def absolute_to_relative(self,absPath):
-        currentDir = os.getcwd() # C:\Users\jsh1\Downloads\working
+        currentDir = os.getcwd()
         return os.path.relpath(absPath,currentDir)
 
-    def process(self,path): # C:\Users\jsh1\downloads\pgsHZz\pgsHZz.apk
+    def process(self,path):
+        apkPath = self.absolute_to_relative(path)
         currentPath = os.getcwd()
-        apkPath = self.absolute_to_relative(path) # ..\pgsHZz\pgsHZz.apk
 
-        sdkPath = self.find_sdk_directory()+'/' # /Users\jsh1\AppData\Local\Android\sdk\build-tools\34.0.0/
-        dexPath = currentPath+'/tmp/dex_files/' # C:\Users\jsh1\Downloads\working/tmp/dex_files/
+        sdkPath = self.find_sdk_directory()+'/'
+        dexPath = currentPath+'/tmp/dex_files/'
         tmpFolder = self.make_folder('tmp')
         
-        os.chdir(tmpFolder) # C:\Users\jsh1\Downloads\working/tmp
+        os.chdir(tmpFolder)
         original = self.make_folder('original')
         repackaging = currentPath+'/tmp/repackaging'
         
         print(f'apkPath : {apkPath}')
         print(f'current : {os.getcwd()+"/original/"}' )
-        self.copy_file(path, original) # C:\Users\jsh1\Downloads\working/tmp/original/
+        self.copy_file(path, original)
         
         self.change_extension_to_zip(original)
         self.extract_dex(original)

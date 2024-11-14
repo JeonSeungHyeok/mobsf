@@ -1,26 +1,22 @@
 import subprocess
 import os
 import platform
-import time
 import psutil
+from colors import *
 
-GREEN = '\033[92m'
-RED = '\033[91m'
-BLUE = '\033[94m'
-YELLOW = '\033[93m'
-RESET = '\033[0m'
 
 class Starting:
-    def __init__(self) -> None:
+    def __init__(self, mobsfName) -> None:
         self.process = None
+        self.mobsfName = mobsfName
 
     def start_mobsf(self):
         print(f"{GREEN}[*]{RESET} Finding MobSF dir path")
         mobsfDirPath=''
         runScript = ''
         for root, dirs, files in os.walk('/Users'):
-            if 'Mobile-Security-Framework-MobSF-master' in dirs:
-                mobsfDirPath = os.path.join(root,'Mobile-Security-Framework-MobSF-master') + '/'
+            if self.mobsfName in dirs:
+                mobsfDirPath = os.path.join(root, self.mobsfName) + '/'
                 break        
         if platform.system()=='Windows':
             runScript='run.bat'

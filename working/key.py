@@ -2,19 +2,19 @@ import os
 import logging
 import shutil
 import hashlib
-
 logger = logging.getLogger(__name__)
 
 class key:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, userHome) -> None:
+        self.userHome = userHome
+
     def api_key(self):
         """Print REST API Key."""
         if os.environ.get('MOBSF_API_KEY'):
             logger.info('\nAPI Key read from environment variable')
             return os.environ['MOBSF_API_KEY']
     
-        secretFile = os.path.join(os.path.expanduser("~"), '.MobSF', 'secret')
+        secretFile = os.path.join(self.userHome, '.MobSF', 'secret')
         if self.is_file_exists(secretFile):
             try:
                 apiKey = open(secretFile).read().strip()
@@ -22,7 +22,7 @@ class key:
             except Exception:
                 logger.exception('Cannot Read API Key')
     
-    def is_file_exists(self,filePath):
+    def is_file_exists(self, filePath):
         if os.path.isfile(filePath):
             return True
         # This fix situation where a user just typed "adb" or another executable
