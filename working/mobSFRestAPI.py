@@ -15,7 +15,7 @@ class Analysis:
         self.device=device
 
     def upload_apk(self):
-        print(f'{BLUE}[*]{RESET} Uploading APK')
+        print(f'{GREEN}[*]{RESET} Uploading APK')
         multipartData = MultipartEncoder(
             fields = {'file':(self.filePath, open(self.filePath,'rb'),'application/octet-stream')}
         )
@@ -27,10 +27,12 @@ class Analysis:
         result = response.json()
         if 'hash' in result:
             self.scanHash = result['hash']
-            print(f'{GREEN}[+]{RESET} Upload completed')
+            print(f'{BLUE}[+]{RESET} Upload completed')
+        else:
+            print(f'{RED}[-]{RESET} Not upload completed')
 
     def scan_apk(self):
-        print(f'{BLUE}[*]{RESET} Scanning Started')
+        print(f'{GREEN}[*]{RESET} Scanning Started')
         data = {
             'hash':self.scanHash,
             'scan_type':self.filePath.split('.')[-1],
@@ -40,10 +42,13 @@ class Analysis:
             'Authorization':self.apiKey
         }
         response = requests.post(f'{self.server}/api/v1/scan',data=data,headers=headers)
-        print(f'{GREEN}[+]{RESET} Scanning completed')
+        if response.status_code == 200:
+            print(f'{BLUE}[+]{RESET} Scanning completed')
+        else:
+            print(f'{RED}[-]{RESET} Not scanning completed')
 
     def static_json(self):
-        print(f"{BLUE}[*]{RESET} Generating Static json")
+        print(f"{GREEN}[*]{RESET} Generating Static json")
         data = {
             "hash":self.scanHash
         }
@@ -72,7 +77,7 @@ class Analysis:
         print(f'{BLUE}[*]{RESET} Result of static analyze is at {YELLOW}{self.path+"/static_analysis_report.pdf"}{RESET}')
 
     def delete(self):
-        print(f"{BLUE}[*]{RESET} Deleting")
+        print(f"{RED}[*]{RESET} Deleting")
         data = {
             "hash":self.scanHash
         }
@@ -83,7 +88,7 @@ class Analysis:
         return response
 
     def get_apps(self):
-        print(f"{BLUE}[*]{RESET} Connecting to Emulator")
+        print(f"{GREEN}[*]{RESET} Connecting to Emulator")
         headers = {
             'Authorization':self.apiKey
         }
@@ -91,7 +96,7 @@ class Analysis:
         return response
 
     def start_dynamic_analysis(self):
-        print(f"{BLUE}[*]{RESET} Starting Dynamic Analysis")
+        print(f"{GREEN}[*]{RESET} Starting Dynamic Analysis")
         data = {
             "hash":self.scanHash
         }
@@ -102,7 +107,7 @@ class Analysis:
         return response
 
     def stop_dynamic_analysis(self):
-        print(f"{BLUE}[*]{RESET} Stop Dynamic Analysis")
+        print(f"{RED}[*]{RESET} Stop Dynamic Analysis")
         data = {
             "hash":self.scanHash
         }
@@ -113,7 +118,7 @@ class Analysis:
         return response
 
     def dynamic_report_json(self):
-        print(f"{BLUE}[*]{RESET} Making Dynamic json report")
+        print(f"{GREEN}[*]{RESET} Making Dynamic json report")
         data = {
             "hash":self.scanHash
         }
@@ -127,7 +132,7 @@ class Analysis:
         return response
     
     def dynamic_act_tester(self, test):
-        print(f"{BLUE}[*]{RESET} Dynamic Act Tester {test}")
+        print(f"{GREEN}[*]{RESET} Dynamic Act Tester {test}")
         data = {
             "hash":self.scanHash,
             "test":test
@@ -237,6 +242,8 @@ class Analysis:
         self.static_json()
         self.get_apps()
         self.start_dynamic_analysis()
+        self.start_dynamic_analysis()
+        
         self.dynamic_act_tester("exported")
         self.dynamic_act_tester("test")
         self.dynamic_tls_test()

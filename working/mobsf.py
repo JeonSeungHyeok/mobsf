@@ -8,7 +8,8 @@ import os
 import config
 
 def main():
-    
+    emulate = emulator(config.EMULATOR_NAME, config.EMULATOR_PATH)
+    emulate.start_emulator()
     
     apkPath = config.APK_PATH
     currnetPath = os.getcwd()
@@ -23,8 +24,7 @@ def main():
     pack = packaging(config.AES_KEY, os.path.basename(apkPath))
     pack.process(path=apkPath)
     
-    emulate = emulator(config.EMULATOR_NAME, config.EMULATOR_PATH)
-    emulate.start_emulator()
+    
     emulate.emulator_ready()
 
     static = Analysis(config.SERVER,currnetPath, os.path.basename(apkPath), apiKey.api_key(), config.DEVICE)
