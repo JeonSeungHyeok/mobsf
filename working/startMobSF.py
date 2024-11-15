@@ -30,14 +30,14 @@ class Starting:
         return self.process
 
     def kill_mobsf(self):
-        print(f'{GREEN}[*]{RESET} Terminating MobSF')
+        print(f'{RED}[*]{RESET} Terminating MobSF')
         if self.process and self.process.poll() is None:
             parent = psutil.Process(self.process.pid)
             for child in parent.children(recursive=True):
                 child.terminate()
             self.process.terminate()
             self.process.wait()
-        print(f"{GREEN}[*]{RESET} Byebye~")
+        print(f"{RED}[*]{RESET} Byebye~")
 
 
 
