@@ -264,8 +264,8 @@ class Analysis:
             self.upload_apk(apk) # 동적 분석 본 apk
             self.get_apps()
             
-            print(self.start_dynamic_analysis())
-            print(self.start_dynamic_analysis())
+            self.start_dynamic_analysis()
+            self.start_dynamic_analysis()
             
             self.frida_instrument(True, frida_code=self.get_frida_code())
             self.frida_get_dependencies()
