@@ -18,8 +18,8 @@ def main():
     # mobsf apikey
     apiKey = key(config.USER_HOME)
 
-    #pack = Packaging(config.AES_KEY, os.path.basename(config.APK_PATH))
-    #apks = pack.process(config.APK_PATH)
+    pack = Packaging(config.AES_KEY, os.path.basename(config.APK_PATH))
+    apks = pack.process(config.APK_PATH)
     
     a= os.path.join(os.getcwd(), '..')
     apks = []
