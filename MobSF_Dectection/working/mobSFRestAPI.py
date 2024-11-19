@@ -42,7 +42,7 @@ class Analysis:
         headers = {
             'Authorization':self.apiKey
         }
-        response = requests.post(f'{self.server}/api/v1/scan',data=data,headers=headers)
+        response = requests.post(f'{self.server}/api/v1/scan',data=data, headers=headers)
         if response.status_code == 200:
             print(f'{BLUE}[+]{RESET} Scanning completed')
         else:
@@ -267,18 +267,16 @@ class Analysis:
             self.static_json(apk)
             self.get_apps()
             
-            statusCode = self.start_dynamic_analysis().status_code
             while True:
-                if statusCode != 200:
-                    statusCode = self.start_dynamic_analysis().status_code
-                else:
+                if self.start_dynamic_analysis().status_code == 200:
                     break
+
             
             self.frida_instrument(True, frida_code=self.get_frida_code())
-            self.frida_get_dependencies()
+            #self.frida_get_dependencies()
 
-            self.dynamic_act_tester("exported")
             self.dynamic_act_tester("activity")
+            self.dynamic_act_tester("exported")
             
             self.frida_monitor()
 
