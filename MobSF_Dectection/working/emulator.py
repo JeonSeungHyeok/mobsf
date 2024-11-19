@@ -12,6 +12,12 @@ class emulator:
     def start_emulator(self):
         print(f"{GREEN}[*]{RESET} Starting the Emulator {self.name}")
         if platform.system() == 'Windows':
+            if os.path.basename(self.path) == "emulator.exe":
+                command = f'start cmd /k {self.path} -avd {self.name} -writable-system -no-snapshot'
+                subprocess.run(command,shell=True)
+            elif os.path.basename(self.path) == "player.exe":
+                command = f'start "" "{self.path}" --vm-name "{self.name}"'
+                subprocess.run(command, shell=True)
             subprocess.run(f'start cmd /k emulator -avd {self.name} -writable-system -no-snapshot', shell=True)
         elif platform.system() == 'Darwin':
             subprocess.run(["osascript", "-e", f"tell application \"Terminal\" to do script \"cd {self.path} && ./emulator -avd {self.name} -writable-system -no-snapshot\""])
@@ -30,7 +36,7 @@ class emulator:
             ).decode().strip()
             if boot_completed == "1":
                 return True
-        except subprocess.CalledProcessError as e:
+        except:
             pass
         return False
     
@@ -39,4 +45,3 @@ class emulator:
         while not self.emulator_ready_verify():
             time.sleep(10)
         print(f"{BLUE}[+]{RESET}Emulator is ready!")
-        time.sleep(10)

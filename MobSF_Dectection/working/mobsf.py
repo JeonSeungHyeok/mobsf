@@ -11,11 +11,9 @@ def main():
     emulate = emulator(config.EMULATOR_NAME, config.EMULATOR_PATH)
     emulate.start_emulator()
     
-    # mobsf execute
     mobsf = Starting(config.MOBSF_NAME)
     mobsf.start_mobsf()
     
-    # mobsf apikey
     apiKey = key(config.USER_HOME)
 
     pack = Packaging(config.AES_KEY, os.path.basename(config.APK_PATH))

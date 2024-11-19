@@ -4,7 +4,6 @@ import json
 from datetime import datetime
 from requests_toolbelt import MultipartEncoder
 from colors import *
-import glob
 
 class Analysis:
     def __init__(self, server, filePath, apks, apiKey, device, fridaPath) -> None:
@@ -17,7 +16,7 @@ class Analysis:
         self.fridaPath = fridaPath
         
     def upload_apk(self, filePath):
-        print(f'{GREEN}[*]{RESET} Uploading APK')
+        print(f'{GREEN}[*]{RESET} Uploading APK: {YELLOW}{os.path.basename(filePath)}{RESET}')
         multipartData = MultipartEncoder(
             fields = {'file':(filePath, open(filePath,'rb'),'application/octet-stream')}
         )
@@ -29,12 +28,12 @@ class Analysis:
         result = response.json()
         if 'hash' in result:
             self.scanHash = result['hash']
-            print(f'{BLUE}[+]{RESET} Upload completed')
+            print(f'{BLUE}[+]{RESET} Upload completed: {YELLOW}{os.path.basename(filePath)}{RESET}')
         else:
             print(f'{RED}[-]{RESET} Not upload completed')
 
     def scan_apk(self, filePath):
-        print(f'{GREEN}[*]{RESET} Scanning Started')
+        print(f'{GREEN}[*]{RESET} Scanning Started: {YELLOW}{os.path.basename(filePath)}{RESET}')
         data = {
             'hash':self.scanHash,
             'scan_type':filePath.split('.')[-1],
@@ -49,8 +48,8 @@ class Analysis:
         else:
             print(f'{RED}[-]{RESET} Not scanning completed')
 
-    def static_json(self, apk):
-        print(f"{GREEN}[*]{RESET} Generating Static json")
+    def static_json(self, filePath):
+        print(f"{GREEN}[*]{RESET} Generating Static json: {YELLOW}{os.path.basename(filePath)}{RESET}")
         data = {
             "hash":self.scanHash
         }
@@ -59,12 +58,12 @@ class Analysis:
         }
         response = requests.post(f"{self.server}/api/v1/report_json",data=data,headers=headers)
         date = datetime.now().strftime("%Y-%m-%d")
-        with open(self.path+f'/static_report-{os.path.basename(apk)}-{date}.json','w+') as f:
-            json.dump(response.json(),f)
+        with open(self.path+f'/static_report-{os.path.basename(filePath)}-{date}.json','w+') as f:
+            json.dump(response.json(),f, indent=4)
         return response
 
-    def download_pdf(self):
-        print(f'{GREEN}[*]{RESET} Downloading the pdf')
+    def download_pdf(self, filePath):
+        print(f'{GREEN}[*]{RESET} Downloading the pdf: {filePath}')
         data = {
             'hash':self.scanHash,
         }
@@ -73,7 +72,7 @@ class Analysis:
         }
         response = requests.post(f'{self.server}/api/v1/download_pdf',data=data,headers=headers)
         date = datetime.now().strftime("%Y-%m-%d")
-        with open(self.path+f'/static_analysis_report-{date}.pdf','wb') as f:
+        with open(self.path+f'/static_analysis_report-{os.path.basename(filePath)}-{date}.pdf','wb') as f:
             f.write(response.content)
         print(f'{BLUE}[+]{RESET} Download complete')
         print(f'{BLUE}[+]{RESET} Result of static analyze is at {YELLOW}{self.path+"/static_analysis_report.pdf"}{RESET}')
@@ -130,7 +129,7 @@ class Analysis:
         response = requests.post(f"{self.server}/api/v1/dynamic/report_json",data=data,headers=headers)
         date = datetime.now().strftime("%Y-%m-%d")
         with open(self.path+f'/dynamic_report-{date}.json','w+') as f:
-            json.dump(response.json(),f)
+            json.dump(response.json(),f, indent=4)
         return response
     
     def dynamic_act_tester(self, test):
@@ -253,15 +252,19 @@ class Analysis:
     
     
     def Analysis(self):
-        for apk in self.apks:
-            #if 'repackaged_' in apk:
-            self.upload_apk(apk) # 정적 분석 리패키징 apk
-            self.scan_apk(apk)
-            self.static_json(apk)
+        for apk in self.apks: # 정적 분석 리패키징 apk
+            if 'repackaged_' in apk:
+                self.upload_apk(apk)
+                self.scan_apk(apk)
+                self.static_json(apk)
+                self.download_pdf(apk)
 
         self.apks = [apk for apk in self.apks if 'repackaged_' not in apk]
-        for apk in self.apks:
-            self.upload_apk(apk) # 동적 분석 본 apk
+        
+        for apk in self.apks: # 동적 분석 본 apk
+            self.upload_apk(apk)
+            self.scan_apk(apk)
+            self.static_json(apk)
             self.get_apps()
             
             statusCode = self.start_dynamic_analysis().status_code
@@ -282,9 +285,8 @@ class Analysis:
             self.frida_instrument(True, frida_code=self.get_frida_code())
             self.dynamic_tls_test()
             self.frida_logs()
-            
-            
-        self.stop_dynamic_analysis()
-        self.dynamic_report_json()
-        self.download_pdf()
-        self.delete()
+
+            self.stop_dynamic_analysis()
+            self.dynamic_report_json()
+            self.download_pdf(apk)
+            self.delete()
