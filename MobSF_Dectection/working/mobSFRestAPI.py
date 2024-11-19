@@ -254,18 +254,22 @@ class Analysis:
     
     def Analysis(self):
         for apk in self.apks:
-            if 'repackaged_' in apk:
-                self.upload_apk(apk) # 정적 분석 리패키징 apk
-                self.scan_apk(apk)
-                self.static_json(apk)
+            #if 'repackaged_' in apk:
+            self.upload_apk(apk) # 정적 분석 리패키징 apk
+            self.scan_apk(apk)
+            self.static_json(apk)
 
         self.apks = [apk for apk in self.apks if 'repackaged_' not in apk]
         for apk in self.apks:
             self.upload_apk(apk) # 동적 분석 본 apk
             self.get_apps()
             
-            self.start_dynamic_analysis()
-            self.start_dynamic_analysis()
+            statusCode = self.start_dynamic_analysis().status_code
+            while True:
+                if statusCode != 200:
+                    statusCode = self.start_dynamic_analysis().status_code
+                else:
+                    break
             
             self.frida_instrument(True, frida_code=self.get_frida_code())
             self.frida_get_dependencies()

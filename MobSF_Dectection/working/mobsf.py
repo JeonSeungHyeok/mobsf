@@ -21,10 +21,6 @@ def main():
     pack = Packaging(config.AES_KEY, os.path.basename(config.APK_PATH))
     apks = pack.process(config.APK_PATH)
     
-    a= os.path.join(os.getcwd(), '..')
-    apks = []
-    for apk in glob.glob(f'{a}/*.apk'):
-        apks.append(os.path.join(a, apk))
     emulate.emulator_ready()
     
     
