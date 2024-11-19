@@ -10,8 +10,8 @@ function hook() {
 
 function bypass_korea() {
     Java.perform(function () {
-        var Locale = Java.use("java.util.Locale").getLanguage.overload();
-            Locale.implementation = function () {
+        var locale = Java.use("java.util.Locale").getLanguage.overload();
+            locale.implementation = function () {
                 return "ko";
             };
     });
@@ -20,11 +20,11 @@ function bypass_korea() {
 function bypass_testKeys() {
     Java.perform(function () {
         var contains = Java.use("java.lang.String").contains.overload("java.lang.CharSequence");
-            contains.implementation = function (compareStr) {
-                if (compareStr == "test-keys") {
+            contains.implementation = function (key) {
+                if (key == "test-keys") {
                     return false;
                 }
-                return contains.call(this, compareStr);
+                return contains.call(this, key);
             };
     });
 }
@@ -32,11 +32,11 @@ function bypass_testKeys() {
 function bypass_superUser() {       
     Java.perform(function () {
         var fileClass = Java.use("java.io.File").$init.overload("java.lang.String");
-            fileClass.implementation = function (pathname) {
-                if (pathname == "/system/app/Superuser.apk") {
+            fileClass.implementation = function (path) {
+                if (path == "/system/app/Superuser.apk") {
                     return fileClass.call(this, "/nothing");
                 }
-                return fileClass.call(this, pathname);
+                return fileClass.call(this, path);
             };
     });
 }
@@ -44,11 +44,11 @@ function bypass_superUser() {
 function bypass_emulator_goldFish() {
     Java.perform(function () {
         var indexof = Java.use("java.lang.String").indexOf.overload("java.lang.String");
-            indexof.implementation = function (compareStr) {
-                if (compareStr == "goldfish") {
+            indexof.implementation = function (gold) {
+                if (gold == "goldfish") {
                     return Java.use("int").$new(-1);
                 }
-                return indexof.call(this, compareStr);
+                return indexof.call(this, gold);
             };
     });
 }
@@ -69,11 +69,11 @@ function bypass_adbEnabled() {
 function bypass_VPN_tun0_ppp0() {
     Java.perform(function () {
         var equals = Java.use("java.lang.String").equals.overload("java.lang.Object");
-            equals.implementation = function (compareStr) {
-                if (compareStr == "tun0" || compareStr == "ppp0") {
+            equals.implementation = function (vpn) {
+                if (vpn == "tun0" || vpn == "ppp0") {
                     return false;
                 }
-                return equals.call(this, compareStr);
+                return equals.call(this, vpn);
             };
     });
 }
@@ -82,11 +82,11 @@ function bypass_proxy() {
     Java.perform(function () {
         var system = Java.use("java.lang.System");
         var getProperty = system.getProperty.overload("java.lang.String");
-            getProperty.implementation = function (key) {
-                if (key == "http.proxyHost" || key == "http.proxyPort") {
+            getProperty.implementation = function (proxy) {
+                if (proxy == "http.proxyHost" || proxy == "http.proxyPort") {
                     return null;
                 }
-                return getProperty.call(system, key);
+                return getProperty.call(system, proxy);
             };
     });
 }
