@@ -4,9 +4,9 @@ import shutil
 import hashlib
 logger = logging.getLogger(__name__)
 
-class key:
-    def __init__(self, userHome) -> None:
-        self.userHome = userHome
+class Key:
+    def __init__(self, user_home) -> None:
+        self.user_home = user_home
 
     def api_key(self):
         """Print REST API Key."""
@@ -14,28 +14,27 @@ class key:
             logger.info('\nAPI Key read from environment variable')
             return os.environ['MOBSF_API_KEY']
     
-        secretFile = os.path.join(self.userHome, '.MobSF', 'secret')
-        if self.is_file_exists(secretFile):
+        secret_file = os.path.join(self.user_home, '.MobSF', 'secret')
+        if self.is_file_exists(secret_file):
             try:
-                apiKey = open(secretFile).read().strip()
-                return self.gen_sha256_hash(apiKey)
+                with open(secret_file, 'r') as file:
+                    api_key = file.read().strip()
+                    return self.generate_sha256_hash(api_key)
             except Exception:
-                logger.exception('Cannot Read API Key')
+                logger.exception('Cannot read API key')
     
-    def is_file_exists(self, filePath):
-        if os.path.isfile(filePath):
+    def is_file_exists(self, file_path):
+        if os.path.isfile(file_path):
             return True
         # This fix situation where a user just typed "adb" or another executable
         # inside settings.py/config.py
-        if shutil.which(filePath):
+        if shutil.which(file_path):
             return True
-        else:
-            return False
+        return False
     
-    def gen_sha256_hash(self,msg):
-        """Generate SHA 256 Hash of the message."""
+    def generate_sha256_hash(self, msg):
+        """Generate SHA-256 hash of the message."""
         if isinstance(msg, str):
             msg = msg.encode('utf-8')
-        hashObject = hashlib.sha256(msg)
-        return hashObject.hexdigest()
-
+        hash_object = hashlib.sha256(msg)
+        return hash_object.hexdigest()

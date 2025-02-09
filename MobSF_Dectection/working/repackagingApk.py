@@ -17,17 +17,17 @@ class Packaging:
         print(f'{GREEN}[*]{RESET} Finding Android SDK Directory')
         for root, dirs, files in os.walk('/Users'):
             if 'Android' in root.split(os.sep) and any(dir.lower() == 'sdk' for dir in dirs):
-                sdkDir = os.path.join(root, next(dir for dir in dirs if dir.lower() == 'sdk'))
-                buildToolsPath = os.path.join(sdkDir, 'build-tools')
-                if os.path.exists(buildToolsPath):
-                    subDirs = os.listdir(buildToolsPath)
-                    if subDirs:
+                sdk_dir = os.path.join(root, next(dir for dir in dirs if dir.lower() == 'sdk'))
+                build_tools_path = os.path.join(sdk_dir, 'build-tools')
+                if os.path.exists(build_tools_path):
+                    sub_dirs = os.listdir(build_tools_path)
+                    if sub_dirs:
                         print(f'{BLUE}[+]{RESET} Successfully find the Android SDK Directory')
-                        return os.path.join(buildToolsPath, subDirs[0])
+                        return os.path.join(build_tools_path, sub_dirs[0])
         print(f"{RED}[-]{RESET} Couldn't find Android SDK Directory")
         return None
 
-    def make_folder(self, name:str) -> str:
+    def make_folder(self, name: str) -> str:
         path = os.path.join(os.getcwd(), name)
         if not os.path.exists(path):
             print(f'{GREEN}[*]{RESET} Creating directory: {path}')
@@ -36,83 +36,76 @@ class Packaging:
             print(f'{YELLOW}[!]{RESET} Directory already exists: {path}')
         return path
 
-    def delete_folder(self, rootPath:str):
-        print(f'{BLUE}[+]{RESET} Delete {rootPath}')
-        shutil.rmtree(rootPath)
+    def delete_folder(self, root_path: str):
+        print(f'{BLUE}[+]{RESET} Delete {root_path}')
+        shutil.rmtree(root_path)
 
-    def copy_file(self, source:str, destination:str):
+    def copy_file(self, source: str, destination: str):
         try:
             shutil.copy2(source, destination)
             print(f'{BLUE}[+]{RESET} Successfully copied from {source} to {destination}')
         except FileNotFoundError:
             print(f'{RED}[-]{RESET} No such file or directory {source}')
 
-    def change_extension_to_zip(self, originalPath:str):
-        for apk in glob.glob(f'{originalPath}/*.apk'):
-            if not os.path.isdir(apk):
-                print(f'{GREEN}[*]{RESET} Changing extension of {apk} to zip')
-                zipName = f'{os.path.splitext(apk)[0]}.zip'
-                os.rename(apk, zipName)
+    def change_extension(self, original_path: str, from_ext: str, to_ext: str):
+        for file in glob.glob(f'{original_path}/*{from_ext}'):
+            if not os.path.isdir(file):
+                print(f'{GREEN}[*]{RESET} Changing extension of {file} to {to_ext}')
+                new_name = f'{os.path.splitext(file)[0]}{to_ext}'
+                os.rename(file, new_name)
 
-    def change_extension_to_apk(self, originalPath:str):
-        for zip in glob.glob(f'{originalPath}/*.zip'):
-            if not os.path.isdir(zip):
-                print(f'{GREEN}[*]{RESET} Changing extension of {zip} to apk')
-                apkName = f'{os.path.splitext(zip)[0]}.apk'
-                os.rename(zip, apkName)
+    def list_zip_files(self, original_path: str):
+        return [file for file in os.listdir(original_path) if file.endswith('.zip')]
 
-    def list_zip_files(self, originalPath:str):
-        return [file for file in os.listdir(originalPath) if file.endswith('.zip')]
-
-    def extract_dex(self, originalPath:str, dexPath:str):
+    def extract_dex(self, original_path: str, dex_path: str):
         print(f'{GREEN}[*]{RESET} Extracting dex file')
-        for zipFile in self.list_zip_files(originalPath):
-            with ZipFile(os.path.join(originalPath, zipFile), 'r') as zipObj:
-                for fileName in zipObj.namelist():
-                    if fileName.endswith('.dex'):
-                        zipObj.extract(fileName, dexPath)
+        for zip_file in self.list_zip_files(original_path):
+            with ZipFile(os.path.join(original_path, zip_file), 'r') as zip_obj:
+                for file_name in zip_obj.namelist():
+                    if file_name.endswith('.dex'):
+                        zip_obj.extract(file_name, dex_path)
 
-    def aes_128_ecb_decode(self, fileName:str, fileData:bytes):
+    def aes_128_ecb_decode(self, file_name: str, file_data: bytes):
         cipher = AES.new(self.key, AES.MODE_ECB)
         try:
-            decryptedData = unpad(cipher.decrypt(fileData), AES.block_size)
-            with open(os.path.join(os.getcwd(), fileName),'wb') as file:
-                file.write(decryptedData)
-            print(f'{BLUE}[+]{RESET} Decode complete: {fileName}')
+            decrypted_data = unpad(cipher.decrypt(file_data), AES.block_size)
+            with open(os.path.join(os.getcwd(), file_name), 'wb') as file:
+                file.write(decrypted_data)
+            print(f'{BLUE}[+]{RESET} Decode complete: {file_name}')
         except ValueError:
-            print(f'{RED}[-]{RESET} Decryption or padding error: {fileName}')
+            print(f'{RED}[-]{RESET} Decryption or padding error: {file_name}')
 
-    def file_signature(self, path:str):
-        decompiledFiles = []
+    def file_signature(self, path: str):
+        decompiled_files = []
         print(f'{GREEN}[*]{RESET} Checking file signatures')
-        for fileName in os.listdir(path):
-            with open(os.path.join(path, fileName), 'rb') as file:
-                fileHeader = file.read(3)
+        for file_name in os.listdir(path):
+            with open(os.path.join(path, file_name), 'rb') as file:
+                file_header = file.read(3)
                 file.seek(0)
-                fileData = file.read()
-                if fileHeader == b'dex':
-                    print(f'{BLUE}[*]{RESET} {fileName} is a .dex file')
+                file_data = file.read()
+                if file_header == b'dex':
+                    print(f'{BLUE}[*]{RESET} {file_name} is a .dex file')
                 else:
-                    print(f'{RED}[*]{RESET} {fileName} is not a .dex file')
-                    decompiledFiles.append(fileName)
-                    self.aes_128_ecb_decode(fileName, fileData)
-        return decompiledFiles
+                    print(f'{RED}[*]{RESET} {file_name} is not a .dex file')
+                    decompiled_files.append(file_name)
+                    self.aes_128_ecb_decode(file_name, file_data)
+        return decompiled_files
 
-    def decompile_apk(self, apkPath:str, outputDir:str):
-        print(f'{GREEN}[*]{RESET} Decompiling APK: {apkPath}')
+    def decompile_apk(self, apk_path: str, output_dir: str):
+        print(f'{GREEN}[*]{RESET} Decompiling APK: {apk_path}')
         if platform.system() == 'Windows':
-            subprocess.run(['cmd', '/c', 'echo.', '|', 'apktool.bat', 'd', apkPath, '-o', outputDir], shell=True)
+            subprocess.run(['cmd', '/c', 'echo.', '|', 'apktool.bat', 'd', apk_path, '-o', output_dir], shell=True)
         else:
-            subprocess.run(['apktool', 'd', apkPath, '-o', outputDir])
+            subprocess.run(['apktool', 'd', apk_path, '-o', output_dir])
 
-    def recompile_apk(self, repackagingPath:str, apkName:str):
-        print(f'{GREEN}[*]{RESET} Recompiling APK: {apkName}')
+    def recompile_apk(self, repackaging_path: str, apk_name: str):
+        print(f'{GREEN}[*]{RESET} Recompiling APK: {apk_name}')
         if platform.system() == 'Windows':
-            subprocess.run(['cmd', '/c', 'echo.', '|', 'apktool.bat', 'b', repackagingPath, '-o', f'repackaged_{apkName}'], shell=True)
+            subprocess.run(['cmd', '/c', 'echo.', '|', 'apktool.bat', 'b', repackaging_path, '-o', f'repackaged_{apk_name}'], shell=True)
         else:
-            subprocess.run(['apktool', 'b', repackagingPath, '-o', f'repackaged_{apkName}'])
+            subprocess.run(['apktool', 'b', repackaging_path, '-o', f'repackaged_{apk_name}'])
 
-    def create_keystore(self, keystore:str, alias:str, storepass:str, keypass:str, dname:str):
+    def create_keystore(self, keystore: str, alias: str, storepass: str, keypass: str, dname: str):
         command = [
             'keytool', '-genkey', '-v', '-keystore', keystore,
             '-alias', alias, '-keyalg', 'RSA', '-keysize', '2048',
@@ -121,57 +114,53 @@ class Packaging:
         print(f'{GREEN}[*]{RESET} Creating keystore: {keystore}')
         subprocess.run(command, check=True)
 
-    def sign_apk(self, sdkPath:str, keystore:str, alias:str, storepass:str, keypass:str, inputApk:str, outputApk:str):
+    def sign_apk(self, sdk_path: str, keystore: str, alias: str, storepass: str, keypass: str, input_apk: str, output_apk: str):
         apksigner = 'apksigner.bat' if platform.system() == 'Windows' else 'apksigner'
         command = [
-            os.path.join(sdkPath, apksigner), 'sign', '--ks', keystore,
+            os.path.join(sdk_path, apksigner), 'sign', '--ks', keystore,
             '--ks-key-alias', alias, '--ks-pass', f'pass:{storepass}',
-            '--key-pass', f'pass:{keypass}', '--out', outputApk, inputApk
+            '--key-pass', f'pass:{keypass}', '--out', output_apk, input_apk
         ]
-        print(f'{GREEN}[*]{RESET} Signing APK: {inputApk}')
+        print(f'{GREEN}[*]{RESET} Signing APK: {input_apk}')
         subprocess.run(command, check=True)
 
-    def verify_apk(self, sdkPath:str, apkPath:str):
+    def verify_apk(self, sdk_path: str, apk_path: str):
         apksigner = 'apksigner.bat' if platform.system() == 'Windows' else 'apksigner'
-        command = [os.path.join(sdkPath, apksigner), 'verify', apkPath]
+        command = [os.path.join(sdk_path, apksigner), 'verify', apk_path]
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode == 0:
-            print(f'{BLUE}[+]{RESET} APK is valid: {apkPath}')
+            print(f'{BLUE}[+]{RESET} APK is valid: {apk_path}')
         else:
-            print(f'{RED}[-]{RESET} APK  is not valid: {apkPath}')
+            print(f'{RED}[-]{RESET} APK  is not valid: {apk_path}')
 
-    def delete_smali_and_copy_dex(self, repackagingPath:str, decompiledFiles:list, dexFile:str):
-        for file in decompiledFiles:
-            smaliPath = os.path.join(repackagingPath, f"smali_{file.split('.')[0]}")
-            if os.path.exists(smaliPath):
-                print(f'{GREEN}[*]{RESET} Deleting smali directory: {smaliPath}')
-                self.delete_folder(smaliPath)
+    def delete_smali_and_copy_dex(self, repackaging_path: str, decompiled_files: list, dex_file: str):
+        for file in decompiled_files:
+            smali_path = os.path.join(repackaging_path, f"smali_{file.split('.')[0]}")
+            if os.path.exists(smali_path):
+                print(f'{GREEN}[*]{RESET} Deleting smali directory: {smali_path}')
+                self.delete_folder(smali_path)
             else:
-                print(f'{RED}[-]{RESET} Not exist smali directory: {smaliPath}')
-            self.copy_file(os.path.join(repackagingPath, '..', dexFile, file), repackagingPath+'/')
-    
-    def notice_apk_path(self, currentPath:str):
-        for apk in glob.glob(f'{currentPath}/repackaged_*.apk'):
-            print(f'{GREEN}[*]{RESET} Your apk => {YELLOW}{os.path.join(currentPath, apk)}{RESET}')
-            
+                print(f'{RED}[-]{RESET} Not exist smali directory: {smali_path}')
+            self.copy_file(os.path.join(repackaging_path, '..', dex_file, file), repackaging_path + '/')
 
-    def absolute_to_relative(self, absPath, currentPath):
-        return os.path.relpath(absPath, currentPath)
-    
-    def get_apks(self, currentPath:str):
+    def notice_apk_path(self, current_path: str):
+        for apk in glob.glob(f'{current_path}/repackaged_*.apk'):
+            print(f'{GREEN}[*]{RESET} Your APK => {YELLOW}{os.path.join(current_path, apk)}{RESET}')
+
+    def get_apks(self, current_path: str):
         apks = []
-        for apk in glob.glob(f'{currentPath}/*.apk'):
-            apks.append(os.path.join(currentPath, apk))
+        for apk in glob.glob(f'{current_path}/*.apk'):
+            apks.append(os.path.join(current_path, apk))
         return apks
 
-    def process(self, path:str):
-        currentPath = os.getcwd()
-        apkPath = self.absolute_to_relative(path, currentPath)
+    def process(self, path: str):
+        current_path = os.getcwd()
+        apk_path = os.path.relpath(path, current_path)
 
-        sdkPath = self.find_sdk_directory()
-        tmpFolderPath = self.make_folder('tmp')
-        
-        os.chdir(tmpFolderPath)
+        sdk_path = self.find_sdk_directory()
+        tmp_folder_path = self.make_folder('tmp')
+
+        os.chdir(tmp_folder_path)
         self.create_keystore(
             keystore='release-key.jks',
             alias='key-alias',
@@ -179,84 +168,81 @@ class Packaging:
             keypass='password',
             dname='CN=., OU=., O=., ST=., C=.'
         )
-        originalPath = self.make_folder('original')
-        repackagingPath = os.path.join(tmpFolderPath, 'repackaging')
-        
-        self.copy_file(path, originalPath)
-        self.change_extension_to_zip(originalPath)
-        
-        dexPath = os.path.join(tmpFolderPath, 'dex_files')
-        self.extract_dex(originalPath, 'dex_files')
-        self.change_extension_to_apk(originalPath)
-        
-        os.chdir(dexPath)
-        decompiledFiles = self.file_signature(dexPath)
 
-        os.chdir(tmpFolderPath)
-        self.decompile_apk(os.path.join('original', os.path.basename(apkPath)), 'repackaging')
-        
-        
+        original_path = self.make_folder('original')
+        repackaging_path = os.path.join(tmp_folder_path, 'repackaging')
+
+        self.copy_file(path, original_path)
+        self.change_extension(original_path, '.apk', '.zip')
+
+        dex_path = os.path.join(tmp_folder_path, 'dex_files')
+        self.extract_dex(original_path, 'dex_files')
+        self.change_extension(original_path, '.zip', '.apk')
+
+        os.chdir(dex_path)
+        decompiled_files = self.file_signature(dex_path)
+
+        os.chdir(tmp_folder_path)
+        self.decompile_apk(os.path.join('original', os.path.basename(apk_path)), 'repackaging')
+
         originalAssetsPath = self.make_folder(os.path.join('original', 'assets'))
-        repackAssetsPath = os.path.join(repackagingPath, 'assets')
+        repackAssetsPath = os.path.join(repackaging_path, 'assets')
         self.copy_file(os.path.join(repackAssetsPath, 'pgsHZz.apk'), originalAssetsPath)
-        
-        repackagingPath2 = os.path.join(tmpFolderPath, 'repackaging2')
-        self.change_extension_to_zip(originalAssetsPath)
-        
-        assetsDexPath = os.path.join(tmpFolderPath, 'assets_dex_files')
+
+        repackaging_path2 = os.path.join(tmp_folder_path, 'repackaging2')
+        self.change_extension(originalAssetsPath, '.apk', '.zip')
+
+        assetsdex_path = os.path.join(tmp_folder_path, 'assets_dex_files')
         self.extract_dex(originalAssetsPath, 'assets_dex_files')
-        self.change_extension_to_apk(originalAssetsPath)
-        
-        os.chdir(assetsDexPath)
-        decompiledFiles2 = self.file_signature(assetsDexPath)
-        
-        os.chdir(tmpFolderPath)
+        self.change_extension(originalAssetsPath, '.zip', '.apk')
+
+        os.chdir(assetsdex_path)
+        decompiled_files2 = self.file_signature(assetsdex_path)
+
+        os.chdir(tmp_folder_path)
         self.decompile_apk(os.path.join(originalAssetsPath, 'pgsHZz.apk'),'repackaging2')
-        
-        os.chdir(repackagingPath2)
-        self.delete_smali_and_copy_dex(repackagingPath2,decompiledFiles2, 'assets_dex_files')
+
+        os.chdir(repackaging_path2)
+        self.delete_smali_and_copy_dex(repackaging_path2,decompiled_files2, 'assets_dex_files')
 
         os.chdir(repackAssetsPath)
-        self.recompile_apk(repackagingPath2, 'pgsHZz.apk')
+        self.recompile_apk(repackaging_path2, 'pgsHZz.apk')
         os.remove(os.path.join(repackAssetsPath, 'pgsHZz.apk'))
-        
 
-        self.copy_file(os.path.join(repackAssetsPath, 'repackaged_pgsHZz.apk'), tmpFolderPath)
-        os.chdir(tmpFolderPath)
+        self.copy_file(os.path.join(repackAssetsPath, 'repackaged_pgsHZz.apk'), tmp_folder_path)
+        os.chdir(tmp_folder_path)
         self.sign_apk(
-            sdkPath=sdkPath,
+            sdk_path=sdk_path,
             keystore='release-key.jks',
             alias='key-alias',
             storepass='password',
             keypass='password',
-            inputApk='repackaged_pgsHZz.apk',
-            outputApk='repackaged_pgsHZz.apk'
+            input_apk='repackaged_pgsHZz.apk',
+            output_apk='repackaged_pgsHZz.apk'
         )
-        self.verify_apk(sdkPath=sdkPath,apkPath='repackaged_pgsHZz.apk')
-        self.copy_file(os.path.join(tmpFolderPath, 'repackaged_pgsHZz.apk'), repackAssetsPath)
-        
-        os.chdir(repackagingPath)
-        self.delete_smali_and_copy_dex(repackagingPath, decompiledFiles, 'dex_files')
-        
-        os.chdir(tmpFolderPath)
+        self.verify_apk(sdk_path=sdk_path,apk_path='repackaged_pgsHZz.apk')
+        self.copy_file(os.path.join(tmp_folder_path, 'repackaged_pgsHZz.apk'), repackAssetsPath)
+
+        os.chdir(repackaging_path)
+        self.delete_smali_and_copy_dex(repackaging_path, decompiled_files, 'dex_files')
+
+        os.chdir(tmp_folder_path)
         self.recompile_apk('repackaging', self.output_apk)
-        
 
         self.sign_apk(
-            sdkPath=sdkPath,
+            sdk_path=sdk_path,
             keystore='release-key.jks',
             alias='key-alias',
             storepass='password',
             keypass='password',
-            inputApk='repackaged_'+self.output_apk,
-            outputApk='repackaged_'+self.output_apk
+            input_apk='repackaged_'+self.output_apk,
+            output_apk='repackaged_'+self.output_apk
         )
-        
-        self.verify_apk(sdkPath=sdkPath,apkPath='repackaged_'+self.output_apk)
-        self.copy_file(os.path.join(tmpFolderPath, 'repackaged_'+self.output_apk),os.path.join(currentPath, '..'))
-        self.copy_file(os.path.join(repackAssetsPath, 'repackaged_pgsHZz.apk'), os.path.join(currentPath, '..'))
-        os.chdir(currentPath)
-        self.delete_folder(tmpFolderPath)
-        self.notice_apk_path(os.path.join(currentPath, '..'))
-        return self.get_apks(os.path.join(currentPath, '..'))
-        
+
+        self.verify_apk(sdk_path=sdk_path,apk_path='repackaged_'+self.output_apk)
+        self.copy_file(os.path.join(tmp_folder_path, 'repackaged_'+self.output_apk),os.path.join(current_path, '..'))
+        self.copy_file(os.path.join(repackAssetsPath, 'repackaged_pgsHZz.apk'), os.path.join(current_path, '..'))
+        os.chdir(current_path)
+        self.delete_folder(tmp_folder_path)
+        self.notice_apk_path(os.path.join(current_path, '..'))
+        return self.get_apks(os.path.join(current_path, '..'))
